@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memoneet_task_flutterapp/view/home_screen.dart';
 import 'package:memoneet_task_flutterapp/view/login_screen.dart';
 import 'package:memoneet_task_flutterapp/view/splash_screen.dart';
 import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
@@ -13,6 +14,9 @@ class Routes {
       case RouteName.loginScreen:
         final args = settings.arguments as Map;
         return MaterialPageRoute(builder: (context) => LoginScreen(args: args));
+
+      case RouteName.homeScreen:
+        return MaterialPageRoute(builder: (context) => const HomeScreen());
 
       default:
         return MaterialPageRoute(

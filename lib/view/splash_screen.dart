@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacementNamed(
         context,
         RouteName.loginScreen,
-        arguments: {'name': 'Ayushman'},
+        arguments: {'title': 'Login'},
       );
     });
     super.initState();
