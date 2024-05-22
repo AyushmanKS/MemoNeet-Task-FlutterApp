@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:memoneet_task_flutterapp/view/splash_screen.dart';
+import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
+import 'package:memoneet_task_flutterapp/view_model/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,7 +9,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +16,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
+      // routes for navigating through screens
+      initialRoute: RouteName.splashScreen,
+      onGenerateRoute: Routes.generateRoute,
     );
   }
 }

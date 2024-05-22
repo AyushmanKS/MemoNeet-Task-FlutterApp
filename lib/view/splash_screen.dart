@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memoneet_task_flutterapp/view/login_screen.dart';
+import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -9,14 +9,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  // navigate to loginScreen after delay
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
-          ));
+      Navigator.pushReplacementNamed(
+        context,
+        RouteName.loginScreen,
+        arguments: {'name': 'Ayushman'},
+      );
     });
     super.initState();
   }
