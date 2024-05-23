@@ -27,7 +27,7 @@ class Routes {
             builder: (context) => const RegistrationScreen());
 
       case RouteName.profileScreen:
-        return MaterialPageRoute(builder: (context) => const ProfileScreen());
+        return MaterialPageRoute(builder: (context) => ProfileScreen());
 
       case RouteName.usersScreen:
         return MaterialPageRoute(builder: (context) => const UsersScreen());
