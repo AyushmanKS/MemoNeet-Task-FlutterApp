@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memoneet_task_flutterapp/view_model/colors.dart';
@@ -19,7 +20,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpassController = TextEditingController();
 
-  // Register new user
+  // Register/creating new user
   void registerUser() async {
     if (validateInputs()) {
       try {
@@ -29,6 +30,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           email: emailController.text,
           password: passwordController.text,
         );
+
+        // storing credentials in firestore
+        createUserDoc(userCredential);
 
         // Navigate to home screen upon successful registration
         Navigator.pushReplacementNamed(context, RouteName.homeScreen,
@@ -63,6 +67,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   // creating firestore database document to store user credentials
+  Future<void> createUserDoc(UserCredential? userCredential) async {
+    if (userCredential != null && userCredential.user != null) {
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(userCredential.user!.email)
+          .set({
+        'email': userCredential.user!.email,
+        'username': usernameController.text
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
