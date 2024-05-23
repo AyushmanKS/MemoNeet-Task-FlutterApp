@@ -37,8 +37,14 @@ class _UsersScreenState extends State<UsersScreen> {
               itemBuilder: (context, index) {
                 final user = users[index];
                 return ListTile(
-                  title: Text(user['email']),
-                  subtitle: Text(user['username']),
+                  title: Text(
+                    user['username'],
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w700),
+                  ),
+                  subtitle: Text(user['email'],
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w500)),
                 );
               },
             );

@@ -20,7 +20,7 @@ class Routes {
 
       case RouteName.homeScreen:
         //final args = settings.arguments as Map;
-        return MaterialPageRoute(builder: (context) => const HomeScreen());
+        return MaterialPageRoute(builder: (context) => HomeScreen());
 
       case RouteName.registrationScreen:
         return MaterialPageRoute(
