@@ -15,6 +15,7 @@ class MyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      obscureText: obsecureText,
       decoration: InputDecoration(
         hintText: hintText,
         border: OutlineInputBorder(

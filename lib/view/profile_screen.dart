@@ -23,51 +23,63 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        backgroundColor: primaryColor,
+        backgroundColor: appBarColor,
       ),
-      body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        future: getUserDetails(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            displayErrorMessages(snapshot.error.toString(), context);
-            return const Center(child: Text('An error occurred!'));
-          } else if (snapshot.hasData && snapshot.data!.exists) {
-            // extracting data
-            Map<String, dynamic>? user = snapshot.data!.data();
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors: [
+              Color(0xFF775ce1),
+              Color(0xFFFFFFFF),
+            ],
+          ),
+        ),
+        child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+          future: getUserDetails(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              displayErrorMessages(snapshot.error.toString(), context);
+              return const Center(child: Text('An error occurred!'));
+            } else if (snapshot.hasData && snapshot.data!.exists) {
+              // extracting data
+              Map<String, dynamic>? user = snapshot.data!.data();
 
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: drawerColor,
-                      borderRadius: BorderRadius.circular(24),
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: drawerColor,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      padding: const EdgeInsets.all(35),
+                      child: const Icon(
+                        Icons.person_2_sharp,
+                        size: 45,
+                      ),
                     ),
-                    padding: const EdgeInsets.all(35),
-                    child: const Icon(
-                      Icons.person_2_sharp,
-                      size: 45,
+                    const SizedBox(height: 15),
+                    Text(user!['username'],
+                        style: const TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    Text(
+                      user['email'],
+                      style: const TextStyle(fontSize: 24),
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  Text(user!['username'],
-                      style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 5),
-                  Text(
-                    user['email'],
-                    style: const TextStyle(fontSize: 24),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return const Center(child: Text('No data found!'));
-          }
-        },
+                  ],
+                ),
+              );
+            } else {
+              return const Center(child: Text('No data found!'));
+            }
+          },
+        ),
       ),
     );
   }

@@ -17,18 +17,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // firestore instance/access
+  // Firestore instance/access
   final FirestoreDatabase thoughtDatabase = FirestoreDatabase();
 
   TextEditingController thoughtController = TextEditingController();
 
-  // to logout user
+  // To logout user
   void logout() {
     FirebaseAuth.instance.signOut();
     Navigator.pushReplacementNamed(context, RouteName.loginScreen);
   }
 
-  // post thought on screen
+  // Post thought on screen
   void postThought() {
     if (thoughtController.text.isNotEmpty) {
       String message = thoughtController.text;
@@ -37,12 +37,12 @@ class _HomeScreenState extends State<HomeScreen> {
     thoughtController.clear();
   }
 
-  // delete thought from database
+  // Delete thought from database
   void deleteThought(String docId) {
     thoughtDatabase.deleteThought(docId);
   }
 
-  // edit thought in the database
+  // Edit thought in the database
   void editThought(String docId, String newMessage) {
     thoughtDatabase.editThought(docId, newMessage);
   }
@@ -89,92 +89,105 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: primaryColor,
+        backgroundColor: appBarColor,
         title: const Text('My Thoughts'),
         actions: [
           IconButton(onPressed: logout, icon: const Icon(Icons.logout))
         ],
       ),
       drawer: const CustomizedDrawer(),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: MyTextField(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors: [
+              Color(0xFF775ce1),
+              Color(0xFFFFFFFF),
+            ],
+          ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: MyTextField(
                       hintText: 'Write your thoughts...',
                       obsecureText: false,
-                      controller: thoughtController),
-                ),
-
-                // post thoughts button
-                PostButton(onTap: postThought)
-              ],
-            ),
-          ),
-
-          // Posting thoughts on screen
-          StreamBuilder(
-            stream: thoughtDatabase.getThoughtsStream(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              final posts = snapshot.data!.docs;
-
-              if (snapshot.data == null || posts.isEmpty) {
-                return const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(25),
-                    child: Text('No Thoughts yet...write something !'),
+                      controller: thoughtController,
+                    ),
                   ),
-                );
-              }
-              return Expanded(
-                child: ListView.builder(
-                  itemCount: posts.length,
-                  itemBuilder: (context, index) {
-                    final post = posts[index];
-                    String docId = post.id;
+                  // Post thoughts button
+                  PostButton(onTap: postThought)
+                ],
+              ),
+            ),
+            Expanded(
+              child: StreamBuilder(
+                stream: thoughtDatabase.getThoughtsStream(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  final posts = snapshot.data!.docs;
 
-                    String message = post['ThoughtMessage'];
-                    String userEmail = post['UserEmail'];
-                    Timestamp timestamp = post['TimeStamp'];
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: ListTile(
-                        title: Text(message),
-                        subtitle: Text(userEmail),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit, color: Colors.blue),
-                              onPressed: () {
-                                showEditDialog(docId, message);
-                              },
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.red),
-                              onPressed: () {
-                                deleteThought(docId);
-                              },
-                            ),
-                          ],
-                        ),
+                  if (snapshot.data == null || posts.isEmpty) {
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(25),
+                        child: Text('No Thoughts yet...write something!'),
                       ),
                     );
-                  },
-                ),
-              );
-            },
-          )
-        ],
+                  }
+                  return ListView.builder(
+                    itemCount: posts.length,
+                    itemBuilder: (context, index) {
+                      final post = posts[index];
+                      String docId = post.id;
+
+                      String message = post['ThoughtMessage'];
+                      String userEmail = post['UserEmail'];
+                      Timestamp timestamp = post['TimeStamp'];
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 8),
+                        child: ListTile(
+                          title: Text(message),
+                          subtitle: Text(userEmail),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(Icons.edit,
+                                    color: Colors.blueAccent),
+                                onPressed: () {
+                                  showEditDialog(docId, message);
+                                },
+                              ),
+                              IconButton(
+                                icon:
+                                    const Icon(Icons.delete, color: Colors.red),
+                                onPressed: () {
+                                  deleteThought(docId);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

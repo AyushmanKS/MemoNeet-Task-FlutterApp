@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memoneet_task_flutterapp/model/colors.dart';
 import 'package:memoneet_task_flutterapp/view_model/routes/name_routes.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,7 +30,11 @@ class _SplashScreenState extends State<SplashScreen> {
         child: SizedBox(
           height: 200,
           width: 200,
-          child: Image.asset('assets/logo.jpg'),
+          child: Icon(
+            Icons.all_inclusive,
+            size: 180,
+            color: secondaryColor,
+          ),
         ),
       ),
     );

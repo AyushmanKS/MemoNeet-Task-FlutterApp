@@ -16,19 +16,34 @@ class _UsersScreenState extends State<UsersScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Users'),
-        backgroundColor: primaryColor,
+        backgroundColor: appBarColor,
       ),
-      body: StreamBuilder(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+            colors: [
+              Color(0xFF775ce1),
+              Color(0xFFFFFFFF),
+            ],
+          ),
+        ),
+        child: StreamBuilder(
           stream: FirebaseFirestore.instance.collection("Users").snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              displayErrorMessages("Something went wrong !", context);
+              displayErrorMessages("Something went wrong!", context);
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (snapshot.hasData == null) {
-              return const Text('No data found');
+            } else if (snapshot.data == null ||
+                !snapshot.hasData ||
+                snapshot.data!.docs.isEmpty) {
+              return const Center(
+                child: Text('No data found'),
+              );
             }
             final users = snapshot.data!.docs;
 
@@ -36,19 +51,37 @@ class _UsersScreenState extends State<UsersScreen> {
               itemCount: users.length,
               itemBuilder: (context, index) {
                 final user = users[index];
-                return ListTile(
-                  title: Text(
-                    user['username'],
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w700),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 16.0),
+                  child: Card(
+                    color: const Color.fromARGB(
+                        255, 160, 147, 212), // Slightly darker color
+                    child: ListTile(
+                      title: Text(
+                        user['username'],
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                      subtitle: Text(
+                        user['email'],
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ),
                   ),
-                  subtitle: Text(user['email'],
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w500)),
                 );
               },
             );
-          }),
+          },
+        ),
+      ),
     );
   }
 }
