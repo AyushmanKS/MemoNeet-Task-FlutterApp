@@ -23,6 +23,15 @@ class FirestoreDatabase {
     return thoughts.doc(docId).delete();
   }
 
+  // edit a thought by document ID
+  Future<void> editThought(String docId, String newMessage) {
+    return thoughts.doc(docId).update({
+      'ThoughtMessage': newMessage,
+      'TimeStamp':
+          Timestamp.now(), // Update timestamp to show modification time
+    });
+  }
+
   // Reading thoughts from database
   Stream<QuerySnapshot> getThoughtsStream() {
     final thoughtStream = FirebaseFirestore.instance

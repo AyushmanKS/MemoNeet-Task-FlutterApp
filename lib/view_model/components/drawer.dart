@@ -13,7 +13,7 @@ class CustomizedDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
               child: Icon(Icons.search, size: 50, color: secondaryColor)),
-          // Home------------------------------------------------------
+          // My Thoughts--------------------------------------------------
           Padding(
             padding: const EdgeInsets.only(left: 50, top: 10),
             child: ListTile(
@@ -22,12 +22,15 @@ class CustomizedDrawer extends StatelessWidget {
                 color: secondaryColor,
               ),
               title: Text(
-                'Home',
+                'My Thoughts',
                 style: TextStyle(fontSize: 20, color: secondaryColor),
               ),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
           ),
-          // Profile -------------------------------------------------
+          // Profile --------------------------------------------------------
           Padding(
             padding: const EdgeInsets.only(left: 50),
             child: ListTile(

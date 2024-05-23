@@ -42,6 +42,48 @@ class _HomeScreenState extends State<HomeScreen> {
     thoughtDatabase.deleteThought(docId);
   }
 
+  // edit thought in the database
+  void editThought(String docId, String newMessage) {
+    thoughtDatabase.editThought(docId, newMessage);
+  }
+
+  // Dialog to edit thought
+  void showEditDialog(String docId, String currentMessage) {
+    TextEditingController editController =
+        TextEditingController(text: currentMessage);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Edit Thought'),
+          content: TextField(
+            controller: editController,
+            decoration:
+                const InputDecoration(hintText: "Update your thought..."),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (editController.text.isNotEmpty) {
+                  editThought(docId, editController.text);
+                }
+                Navigator.of(context).pop();
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,10 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         backgroundColor: primaryColor,
         title: const Text('My Thoughts'),
-        // Text(
-        //   'Hello ${widget.args['username'].toString()} !',
-        //   style: const TextStyle(fontWeight: FontWeight.bold),
-        // ),
         actions: [
           IconButton(onPressed: logout, icon: const Icon(Icons.logout))
         ],
@@ -112,11 +150,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ListTile(
                         title: Text(message),
                         subtitle: Text(userEmail),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () {
-                            deleteThought(docId);
-                          },
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit, color: Colors.blue),
+                              onPressed: () {
+                                showEditDialog(docId, message);
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () {
+                                deleteThought(docId);
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     );

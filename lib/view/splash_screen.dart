@@ -12,6 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   // navigate to loginScreen after delay
   @override
   void initState() {
+    super.initState();
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacementNamed(
         context,
@@ -19,7 +20,6 @@ class _SplashScreenState extends State<SplashScreen> {
         arguments: {'title': 'Login'},
       );
     });
-    super.initState();
   }
 
   @override

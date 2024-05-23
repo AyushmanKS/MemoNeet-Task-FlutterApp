@@ -33,15 +33,7 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const UsersScreen());
 
       default:
-        return MaterialPageRoute(
-          builder: (context) {
-            return const Scaffold(
-              body: Center(
-                child: Text('Something went wrong...'),
-              ),
-            );
-          },
-        );
+        return MaterialPageRoute(builder: (context) => const LoginScreen());
     }
   }
 }
