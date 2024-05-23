@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memoneet_task_flutterapp/view_model/colors.dart';
+import 'package:memoneet_task_flutterapp/view_model/routes/name_routes.dart';
 
 class CustomizedDrawer extends StatelessWidget {
   const CustomizedDrawer({super.key});
@@ -38,6 +39,10 @@ class CustomizedDrawer extends StatelessWidget {
                 'Profile',
                 style: TextStyle(fontSize: 20, color: secondaryColor),
               ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, RouteName.profileScreen);
+              },
             ),
           ),
           // Users-----------------------------------------------------------
@@ -52,6 +57,10 @@ class CustomizedDrawer extends StatelessWidget {
                 'Users',
                 style: TextStyle(fontSize: 20, color: secondaryColor),
               ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, RouteName.usersScreen);
+              },
             ),
           ),
         ],

@@ -41,6 +41,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
+  // validating textfield inputs
   bool validateInputs() {
     if (usernameController.text.isEmpty) {
       displayErrorMessages("Username cannot be empty", context);
@@ -60,6 +61,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
     return true;
   }
+
+  // creating firestore database document to store user credentials
 
   @override
   Widget build(BuildContext context) {
