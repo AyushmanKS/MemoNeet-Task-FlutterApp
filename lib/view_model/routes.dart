@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memoneet_task_flutterapp/view/home_screen.dart';
 import 'package:memoneet_task_flutterapp/view/login_screen.dart';
+import 'package:memoneet_task_flutterapp/view/registration_screen.dart';
 import 'package:memoneet_task_flutterapp/view/splash_screen.dart';
 import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
 
@@ -17,6 +18,10 @@ class Routes {
 
       case RouteName.homeScreen:
         return MaterialPageRoute(builder: (context) => const HomeScreen());
+
+      case RouteName.registrationScreen:
+        return MaterialPageRoute(
+            builder: (context) => const RegistrationScreen());
 
       default:
         return MaterialPageRoute(

@@ -3,25 +3,25 @@ import 'package:memoneet_task_flutterapp/view_model/colors.dart';
 import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
 import 'package:memoneet_task_flutterapp/view_model/textfields.dart';
 
-class LoginScreen extends StatefulWidget {
-  final Map args;
-
-  LoginScreen({super.key, required this.args});
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   // textfield controllers
+  TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmpasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Screen'),
+        title: const Text('Create a new account'),
         backgroundColor: primaryColor,
       ),
       body: Padding(
@@ -29,19 +29,35 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // username text field----------------------------------------------
+            MyTextField(
+                hintText: 'Username',
+                obsecureText: false,
+                controller: usernameController),
+
+            const SizedBox(height: 12),
             // email text field-------------------------------------------------
             MyTextField(
                 hintText: 'Enter Email',
                 obsecureText: false,
                 controller: emailController),
+
             const SizedBox(height: 12),
             // password text field----------------------------------------------
             MyTextField(
                 hintText: 'Enter Password',
                 obsecureText: false,
-                controller: emailController),
+                controller: passwordController),
+
+            const SizedBox(height: 12),
+            // confirm password text field--------------------------------------
+            MyTextField(
+                hintText: 'Confirm Password',
+                obsecureText: false,
+                controller: confirmpasswordController),
+
             const SizedBox(height: 20),
-            // Login Button-----------------------------------------------------
+            // Register Button--------------------------------------------------
             SizedBox(
               height: 50,
               width: double.infinity,
@@ -53,29 +69,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     backgroundColor: secondaryColor,
                     foregroundColor: whiteColor),
                 child: const Text(
-                  'Login',
+                  'Register',
                   style: TextStyle(fontSize: 20),
                 ),
               ),
             ),
 
             const SizedBox(height: 20),
-            // dont have an account-> navigate to registration screen
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Don't have an account?"),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, RouteName.registrationScreen);
-                  },
-                  child: const Text(
-                    ' Register Here',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       ),
