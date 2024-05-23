@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memoneet_task_flutterapp/view_model/colors.dart';
-import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
-import 'package:memoneet_task_flutterapp/view_model/showdialog.dart';
-import 'package:memoneet_task_flutterapp/view_model/textfields.dart';
+import 'package:memoneet_task_flutterapp/view_model/routes/name_routes.dart';
+import 'package:memoneet_task_flutterapp/view_model/components/showdialog.dart';
+import 'package:memoneet_task_flutterapp/view_model/components/textfields.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -21,11 +21,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   // Register new user
   void registerUser() async {
-    if (passwordController.text != confirmpassController.text) {
-      displayErrorMessages("Passwords don't match", context);
-    } else {
+    if (validateInputs()) {
       try {
-        //creating new user
+        // Creating new user
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text,
@@ -33,11 +31,34 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         );
 
         // Navigate to home screen upon successful registration
-        Navigator.pushReplacementNamed(context, RouteName.homeScreen);
+        Navigator.pushReplacementNamed(context, RouteName.homeScreen,
+            arguments: {
+              'username': usernameController.text,
+            });
       } on FirebaseAuthException catch (e) {
-        displayErrorMessages(e.code, context);
+        displayErrorMessages(e.message ?? e.code, context);
       }
     }
+  }
+
+  bool validateInputs() {
+    if (usernameController.text.isEmpty) {
+      displayErrorMessages("Username cannot be empty", context);
+      return false;
+    } else if (emailController.text.isEmpty) {
+      displayErrorMessages("Email cannot be empty", context);
+      return false;
+    } else if (passwordController.text.isEmpty) {
+      displayErrorMessages("Password cannot be empty", context);
+      return false;
+    } else if (passwordController.text.length < 8) {
+      displayErrorMessages("Password must be at least 8 characters", context);
+      return false;
+    } else if (passwordController.text != confirmpassController.text) {
+      displayErrorMessages("Passwords don't match", context);
+      return false;
+    }
+    return true;
   }
 
   @override

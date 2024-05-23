@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memoneet_task_flutterapp/view_model/colors.dart';
-import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
-import 'package:memoneet_task_flutterapp/view_model/showdialog.dart';
-import 'package:memoneet_task_flutterapp/view_model/textfields.dart';
+import 'package:memoneet_task_flutterapp/view_model/routes/name_routes.dart';
+import 'package:memoneet_task_flutterapp/view_model/components/showdialog.dart';
+import 'package:memoneet_task_flutterapp/view_model/components/textfields.dart';
 
 class LoginScreen extends StatefulWidget {
-  final Map args;
-
-  LoginScreen({super.key, required this.args});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -21,15 +19,32 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // login existing user
   void login() async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      Navigator.pushReplacementNamed(context, RouteName.homeScreen);
-    } on FirebaseAuthException catch (e) {
-      displayErrorMessages(e.code, context);
+    if (validateInputs()) {
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        Navigator.pushReplacementNamed(context, RouteName.homeScreen);
+      } on FirebaseAuthException catch (e) {
+        displayErrorMessages(e.message ?? e.code, context);
+      }
     }
+  }
+
+// input validation cheking-----------------------------------------------------
+  bool validateInputs() {
+    if (emailController.text.isEmpty) {
+      displayErrorMessages("Email cannot be empty", context);
+      return false;
+    } else if (passwordController.text.isEmpty) {
+      displayErrorMessages("Password cannot be empty", context);
+      return false;
+    } else if (passwordController.text.length < 8) {
+      displayErrorMessages("Password must be at least 8 characters", context);
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -72,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            // dont have an account-> navigate to registration screen
+            // don't have an account -> navigate to registration screen
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

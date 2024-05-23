@@ -3,7 +3,7 @@ import 'package:memoneet_task_flutterapp/view/home_screen.dart';
 import 'package:memoneet_task_flutterapp/view/login_screen.dart';
 import 'package:memoneet_task_flutterapp/view/registration_screen.dart';
 import 'package:memoneet_task_flutterapp/view/splash_screen.dart';
-import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
+import 'package:memoneet_task_flutterapp/view_model/routes/name_routes.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -13,11 +13,12 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const SplashScreen());
 
       case RouteName.loginScreen:
-        final args = settings.arguments as Map;
-        return MaterialPageRoute(builder: (context) => LoginScreen(args: args));
+        //final args = settings.arguments as Map;
+        return MaterialPageRoute(builder: (context) => LoginScreen());
 
       case RouteName.homeScreen:
-        return MaterialPageRoute(builder: (context) => const HomeScreen());
+        //final args = settings.arguments as Map;
+        return MaterialPageRoute(builder: (context) => HomeScreen());
 
       case RouteName.registrationScreen:
         return MaterialPageRoute(

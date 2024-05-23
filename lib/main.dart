@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:memoneet_task_flutterapp/firebase_options.dart';
-import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
-import 'package:memoneet_task_flutterapp/view_model/routes.dart';
+import 'package:memoneet_task_flutterapp/view_model/routes/name_routes.dart';
+import 'package:memoneet_task_flutterapp/view_model/routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

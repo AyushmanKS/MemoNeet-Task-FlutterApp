@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
+import 'package:memoneet_task_flutterapp/view_model/routes/name_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
