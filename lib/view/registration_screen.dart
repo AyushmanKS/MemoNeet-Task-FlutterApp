@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memoneet_task_flutterapp/view_model/colors.dart';
 import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
+import 'package:memoneet_task_flutterapp/view_model/showdialog.dart';
 import 'package:memoneet_task_flutterapp/view_model/textfields.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -15,7 +17,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmpasswordController = TextEditingController();
+  TextEditingController confirmpassController = TextEditingController();
+
+  // Register new user
+  void registerUser() async {
+    if (passwordController.text != confirmpassController.text) {
+      displayErrorMessages("Passwords don't match", context);
+    } else {
+      try {
+        //creating new user
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        // Navigate to home screen upon successful registration
+        Navigator.pushReplacementNamed(context, RouteName.homeScreen);
+      } on FirebaseAuthException catch (e) {
+        displayErrorMessages(e.code, context);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,15 +69,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             // password text field----------------------------------------------
             MyTextField(
                 hintText: 'Enter Password',
-                obsecureText: false,
+                obsecureText: true,
                 controller: passwordController),
 
             const SizedBox(height: 12),
             // confirm password text field--------------------------------------
             MyTextField(
                 hintText: 'Confirm Password',
-                obsecureText: false,
-                controller: confirmpasswordController),
+                obsecureText: true,
+                controller: confirmpassController),
 
             const SizedBox(height: 20),
             // Register Button--------------------------------------------------
@@ -62,9 +85,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 50,
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, RouteName.homeScreen);
-                },
+                onPressed: registerUser,
                 style: ElevatedButton.styleFrom(
                     backgroundColor: secondaryColor,
                     foregroundColor: whiteColor),

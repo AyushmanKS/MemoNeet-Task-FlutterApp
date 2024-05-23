@@ -1,8 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:memoneet_task_flutterapp/firebase_options.dart';
 import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
 import 'package:memoneet_task_flutterapp/view_model/routes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "918321022715",
+    "project_id": "memoneet-taskapp",
+    "storage_bucket": "memoneet-taskapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918321022715:android:c63801967dabeacc00125e",
+        "android_client_info": {
+          "package_name": "com.example.memoneet_task_flutterapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcS35ipPIxI18X3-bN3nYiWSP0lpFv3Go"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

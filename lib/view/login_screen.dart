@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:memoneet_task_flutterapp/view_model/colors.dart';
 import 'package:memoneet_task_flutterapp/view_model/name_routes.dart';
+import 'package:memoneet_task_flutterapp/view_model/showdialog.dart';
 import 'package:memoneet_task_flutterapp/view_model/textfields.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,6 +18,19 @@ class _LoginScreenState extends State<LoginScreen> {
   // textfield controllers
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  // login existing user
+  void login() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      Navigator.pushReplacementNamed(context, RouteName.homeScreen);
+    } on FirebaseAuthException catch (e) {
+      displayErrorMessages(e.code, context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +53,15 @@ class _LoginScreenState extends State<LoginScreen> {
             // password text field----------------------------------------------
             MyTextField(
                 hintText: 'Enter Password',
-                obsecureText: false,
-                controller: emailController),
+                obsecureText: true,
+                controller: passwordController),
             const SizedBox(height: 20),
             // Login Button-----------------------------------------------------
             SizedBox(
               height: 50,
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, RouteName.homeScreen);
-                },
+                onPressed: login,
                 style: ElevatedButton.styleFrom(
                     backgroundColor: secondaryColor,
                     foregroundColor: whiteColor),
@@ -58,7 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
             // dont have an account-> navigate to registration screen
             Row(
