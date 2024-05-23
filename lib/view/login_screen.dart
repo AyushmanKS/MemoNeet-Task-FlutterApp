@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:memoneet_task_flutterapp/view_model/colors.dart';
+import 'package:memoneet_task_flutterapp/model/colors.dart';
 import 'package:memoneet_task_flutterapp/view_model/routes/name_routes.dart';
 import 'package:memoneet_task_flutterapp/view_model/components/showdialog.dart';
 import 'package:memoneet_task_flutterapp/view_model/components/textfields.dart';

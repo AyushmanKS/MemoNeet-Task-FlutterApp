@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memoneet_task_flutterapp/view_model/colors.dart';
+import 'package:memoneet_task_flutterapp/model/colors.dart';
 
 class PostButton extends StatelessWidget {
   final void Function()? onTap;
