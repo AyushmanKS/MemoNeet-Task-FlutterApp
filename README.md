@@ -8,7 +8,7 @@ app which allows users to read/write/edit and delete their post/thought and also
 * Edit Posts: Modify your existing posts to refine or update your ideas.
 * Delete Posts: Remove posts you no longer wish to keep.
 * View: your profile and others user's priofiles
-* View Other Users' Posts: Browse and read thoughts shared by other users.
+* View Other User's Posts: Browse and read thoughts shared by other users.
 
 ## Installation
 * Clone this repository to your local machine using 'git clone'.
