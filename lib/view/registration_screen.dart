@@ -88,78 +88,89 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-            colors: [
-              Color(0xFF775ce1),
-              Color(0xFFFFFFFF),
-            ],
+      body: Stack(
+        children: [
+          // Gradient background
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+                colors: [
+                  Color(0xFF775ce1),
+                  Color(0xFFFFFFFF),
+                ],
+              ),
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // username text field----------------------------------------------
-              MyTextField(
-                hintText: 'Username',
-                obsecureText: false,
-                controller: usernameController,
-              ),
-
-              const SizedBox(height: 12),
-              // email text field-------------------------------------------------
-              MyTextField(
-                hintText: 'Enter Email',
-                obsecureText: false,
-                controller: emailController,
-              ),
-
-              const SizedBox(height: 12),
-              // password text field----------------------------------------------
-              MyTextField(
-                hintText: 'Enter Password',
-                obsecureText: true,
-                controller: passwordController,
-              ),
-
-              const SizedBox(height: 12),
-              // confirm password text field--------------------------------------
-              MyTextField(
-                hintText: 'Confirm Password',
-                obsecureText: true,
-                controller: confirmpassController,
-              ),
-
-              const SizedBox(height: 20),
-              // Register Button--------------------------------------------------
-              SizedBox(
-                height: 50,
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: registerUser,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: secondaryColor,
-                    foregroundColor: whiteColor,
+          // Scrollable content
+          SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 60), // Add some spacing from the top
+                  // icon-----------------------------------------------------
+                  const Icon(
+                    Icons.all_inclusive,
+                    size: 180,
+                    color: Color(0xFFFBEA89),
                   ),
-                  child: const Text(
-                    'Register',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
+                  const SizedBox(height: 12),
+                  // username text field----------------------------------------------
+                  MyTextField(
+                    hintText: 'Username',
+                    obsecureText: false,
+                    controller: usernameController,
                   ),
-                ),
+                  const SizedBox(height: 12),
+                  // email text field-------------------------------------------------
+                  MyTextField(
+                    hintText: 'Enter Email',
+                    obsecureText: false,
+                    controller: emailController,
+                  ),
+                  const SizedBox(height: 12),
+                  // password text field----------------------------------------------
+                  MyTextField(
+                    hintText: 'Enter Password',
+                    obsecureText: true,
+                    controller: passwordController,
+                  ),
+                  const SizedBox(height: 12),
+                  // confirm password text field--------------------------------------
+                  MyTextField(
+                    hintText: 'Confirm Password',
+                    obsecureText: true,
+                    controller: confirmpassController,
+                  ),
+                  const SizedBox(height: 20),
+                  // Register Button--------------------------------------------------
+                  SizedBox(
+                    height: 50,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: registerUser,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: secondaryColor,
+                        foregroundColor: whiteColor,
+                      ),
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
-
-              const SizedBox(height: 20),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
