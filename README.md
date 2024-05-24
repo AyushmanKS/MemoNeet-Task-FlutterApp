@@ -60,3 +60,12 @@ used the MVVM- Model-View-View model architecture to manage all code files
 
 ![users screen](https://github.com/androidclubvitbhopal/Temp_Predict-O-R/assets/118997882/534b56d5-219a-4e9a-b918-8d6fd34cbb33)
 ![profile screen](https://github.com/androidclubvitbhopal/Temp_Predict-O-R/assets/118997882/914a16ba-a274-4044-95de-7f3701d1264f)
+
+## Databse Management
+* Firebase email password authentication
+![authentication](https://github.com/androidclubvitbhopal/Tempsor/assets/118997882/1058fc8f-e531-4efa-aa11-fa3b074ec642)
+
+* Cloud Firestore to store and manage Thought posts and user credentials
+  
+![thoughts db](https://github.com/androidclubvitbhopal/Tempsor/assets/118997882/d8ccbc3b-9f3a-4091-abf7-54689253616a)
+![users db](https://github.com/androidclubvitbhopal/Tempsor/assets/118997882/1c17ae65-73bc-4fe3-8592-0951d8e1c1fc)
